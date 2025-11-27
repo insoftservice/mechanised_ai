@@ -6,9 +6,12 @@ from models import *
 from flow import *
 
 def run_queries(search_queries: list[str], **kwargs):
-    """Run the generated queries."""
-    # Directly pass the queries to the LLM, not the literal '{query}'
-    return llm.invoke(search_queries) # this passes all queries at once, should probably be one by one. 
+    """Run the generated queries individually and aggregate results."""
+    results = []
+    for query in search_queries:
+        response = llm.invoke(f"Search: {query}")
+        results.append(f"Query: {query}\nResult: {response.content}")
+    return "\n---\n".join(results) 
 
 
 tool_node = ToolNode(
