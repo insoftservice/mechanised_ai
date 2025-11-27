@@ -9,17 +9,17 @@ from pydantic import BaseModel, Field
 
 
 class Reflection(BaseModel):
-    missing: str = Field(description="Critique of what is missing.")
-    superfluous: str = Field(description="Critique of what is superfluous")
+    missing: str = Field(description="Factual gaps, missing quantitative details, and unverifiable claims.")
+    superfluous: str = Field(description="Overly broad statements, unsupported assertions, and redundant information.")
 
 
 class AnswerQuestion(BaseModel):
     """Answer the question. Provide an answer, reflection, and then follow up with search queries to improve the answer."""
 
-    answer: str = Field(description="~250 word detailed answer to the question.")
+    answer: str = Field(description="Clear, fact-grounded answer under 250 words. Cite specific facts [1][2] as you mention them.")
     reflection: Reflection = Field(description="Your reflection on the initial answer.")
     search_queries: list[str] = Field(
-        description="1-3 search queries for researching improvements to address the critique of your current answer."
+        description="1-3 focused search queries to fill factual gaps, verify claims, and obtain quantitative details."
     )
 
 
